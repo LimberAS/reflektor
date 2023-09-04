@@ -1,1 +1,1 @@
-ghcr.io/LimberAS/reflektor-output-nfs:0.9.0
+ghcr.io/limberas/reflektor-output-nfs:0.9.0
