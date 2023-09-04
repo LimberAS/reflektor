@@ -1,0 +1,11 @@
+{
+    "name": "@limberas/reflektor-output-web",
+    "private": true,
+    "version": "0.0.0",
+    "description": "Component exporting the input content by serving it over HTTP",
+    "scripts": {},
+    "license": "GPL-3.0-only",
+    "devDependencies": {
+        "typescript": "^5.2.2"
+    }
+}

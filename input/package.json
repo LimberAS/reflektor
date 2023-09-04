@@ -1,0 +1,11 @@
+{
+    "name": "@limberas/reflektor-input",
+    "private": true,
+    "version": "0.0.0",
+    "description": "Component getting the input content",
+    "scripts": {},
+    "license": "GPL-3.0-only",
+    "devDependencies": {
+        "typescript": "^5.2.2"
+    }
+}
