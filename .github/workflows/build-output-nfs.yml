@@ -26,7 +26,7 @@ jobs:
         id: get-publish-tag
         run: |
           PUBLISH_TAG=$(cat output/nfs/publish-tag.txt)
-          echo "{tag}=$PUBLISH_TAG"  >> "$GITHUB_OUTPUT"
+          echo "tag=$PUBLISH_TAG" >> "$GITHUB_OUTPUT"
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
