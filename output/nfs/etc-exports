@@ -1,0 +1,1 @@
+/srv/exports *(ro,fsid=0,insecure,all_squash,anonuid=1000,anongid=1000,async,no_subtree_check)
