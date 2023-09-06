@@ -1,0 +1,58 @@
+name: Build and publish node components
+
+on:
+    workflow_dispatch:
+
+jobs:
+    build-and-push:
+        name: Build and publish
+        runs-on: ubuntu-latest
+        timeout-minutes: 10
+        permissions:
+            contents: read
+            packages: write
+        steps:
+            - uses: pnpm/action-setup@v2.2.4
+              with:
+                  version: 8.7.0
+            - name: Setup node
+              uses: actions/setup-node@v3
+              with:
+                  node-version: 20
+                  cache: pnpm
+
+            - name: Checkout
+              uses: actions/checkout@v3
+
+            - name: Install
+              run: pnpm install --frozen-lockfile
+
+            - name: Lint
+              run: pnpm run --recursive lint
+
+            - name: Bundle
+              run: pnpm run --recursive bundle
+
+            - name: Login to GitHub Container Registry
+              uses: docker/login-action@v2
+              with:
+                  registry: ghcr.io
+                  username: ${{ github.actor }}
+                  password: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Get publish version
+              id: get-publish-version
+              run: |
+                  PUBLISH_VERSION=$(node -e "console.log(require('./package.json').version)")
+                  echo "version=$PUBLISH_VERSION" >> "$GITHUB_OUTPUT"
+
+            - name: Build and push reflektor input
+              uses: docker/build-push-action@v2
+              with:
+                  context: input/dist
+                  file: docker/Dockerfile
+                  build-args: |
+                      entry=reflektor-input
+                  push: true
+                  tags: ghcr.io/limberas/reflektor-input:${{ steps.get-publish-version.outputs.version }}
+# add output web component here

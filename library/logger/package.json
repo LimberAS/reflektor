@@ -1,0 +1,20 @@
+{
+    "name": "@limberas/reflektor-logger",
+    "type": "module",
+    "private": true,
+    "version": "0.0.0",
+    "description": "Logging utils",
+    "license": "GPL-3.0-or-later",
+    "scripts": {
+        "lint": "tsc --project tsconfig.json"
+    },
+    "main": "index.js",
+    "dependencies": {
+        "pino": "^8.14.1",
+        "@limberas/reflektor-logger": "workspace:*"
+    },
+    "devDependencies": {
+        "typescript": "^5.2.2",
+        "@types/node": "^20.5.9"
+    }
+}

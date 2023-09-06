@@ -1,1 +1,1 @@
-{ packages: [input, output/web] }
+{ packages: [input, output/web, library/*] }

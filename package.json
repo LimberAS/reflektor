@@ -1,12 +1,13 @@
 {
     "name": "@limberas/reflektor",
     "private": true,
-    "version": "0.0.0",
+    "version": "0.9.0",
     "description": "Monorepo for reflektor",
     "scripts": {
-        "reset": "git clean -fxd"
+        "reset": "git clean -fxd",
+        "lint": "pnpm run --recursive lint"
     },
-    "license": "GPL-3.0-only",
+    "license": "GPL-3.0-or-later",
     "devDependencies": {
         "@commitlint/cli": "^17.7.1",
         "@commitlint/config-conventional": "^17.7.0",

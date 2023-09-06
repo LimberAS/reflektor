@@ -3,9 +3,24 @@
     "private": true,
     "version": "0.0.0",
     "description": "Component getting the input content",
-    "scripts": {},
-    "license": "GPL-3.0-only",
+    "license": "GPL-3.0-or-later",
+    "type": "module",
+    "scripts": {
+        "start": "vite-node --inspect=9229 --options.deps.moduleDirectories='/node_modules/' ./src/bin.ts start",
+        "bundle": "node bundle.js",
+        "lint": "tsc"
+    },
     "devDependencies": {
-        "typescript": "^5.2.2"
+        "@types/node": "^20.5.9",
+        "esbuild": "^0.19.2",
+        "typescript": "^5.2.2",
+        "vite-node": "^0.34.3"
+    },
+    "dependencies": {
+        "@limberas/reflektor-fastify": "workspace:*",
+        "@limberas/reflektor-logger": "workspace:*",
+        "commander": "^11.0.0",
+        "simple-git": "^3.19.1",
+        "zod": "^3.22.2"
     }
 }
