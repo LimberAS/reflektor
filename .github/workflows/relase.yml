@@ -1,4 +1,4 @@
-name: Build and publish node components
+name: Release components
 
 on:
     workflow_dispatch:
@@ -57,4 +57,11 @@ jobs:
                       entry=reflektor-input
                   push: true
                   tags: ghcr.io/limberas/reflektor-input:${{ steps.get-publish-version.outputs.version }}
+
+            - name: Build and push reflektor output/nfs
+              uses: docker/build-push-action@v2
+              with:
+                  context: output/nfs
+                  push: true
+                  tags: ghcr.io/limberas/reflektor-output-nfs:${{ steps.get-publish-version.outputs.version }}
 # add output web component here
