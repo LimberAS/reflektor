@@ -6,7 +6,7 @@
     "license": "GPL-3.0-or-later",
     "type": "module",
     "scripts": {
-        "start": "vite-node --inspect=9229 --options.deps.moduleDirectories='/node_modules/' ./src/bin.ts start",
+        "start": "vite-node --inspect=9229 --options.deps.moduleDirectories='/node_modules/' ./src/bin.ts",
         "bundle": "node bundle.js",
         "lint": "tsc"
     },
