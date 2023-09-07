@@ -1,36 +1,51 @@
-import { mkdirSync, rmSync } from 'fs';
+import { existsSync, mkdirSync, rmSync } from 'fs';
 
-import { SimpleGit, simpleGit } from 'simple-git';
+import { CheckRepoActions, SimpleGit, simpleGit } from 'simple-git';
 
 import { GitSource } from './config.js';
 import { getSecret } from './secrets.js';
 import { Source } from './source.js';
 
 export class Git implements Source {
-    private git: SimpleGit;
-    private cloned: boolean;
+    private git: SimpleGit | undefined;
 
     constructor(readonly config: GitSource) {}
 
     async copyContent(destinationPath: string) {
-        if (this.cloned) {
+        if (this.git !== undefined) {
             await this.git.pull();
         } else {
-            rmSync(destinationPath, { recursive: true, force: true });
-            mkdirSync(destinationPath);
             const repository = this.config.authorization
                 ? `https://${getSecret(this.config.authorization.username)}:${getSecret(
                       this.config.authorization.password
                   )}@${this.config.repository}`
                 : `https://${this.config.repository}`;
-            this.git = simpleGit({
-                baseDir: destinationPath,
-            });
-            await this.git.clone(repository, {
-                '--branch': this.config.branch,
-                '--depth': '1',
-            });
-            this.cloned = true;
+
+            if (existsSync(destinationPath)) {
+                const git = simpleGit({ baseDir: destinationPath });
+                const exists = await git.checkIsRepo(CheckRepoActions.IS_REPO_ROOT);
+                if (exists) {
+                    const remotes = await git.getRemotes(true);
+                    const remoteRepository = remotes[0]?.refs.fetch;
+                    if (remoteRepository === repository) {
+                        this.git = git;
+                        await this.git.pull();
+                    }
+                }
+            }
+
+            if (this.git === undefined) {
+                rmSync(destinationPath, { recursive: true, force: true });
+                mkdirSync(destinationPath);
+
+                const git = simpleGit();
+                await git.clone(repository, destinationPath, {
+                    '--branch': this.config.branch,
+                    '--depth': '1',
+                });
+                git.cwd({ path: destinationPath, root: true });
+                this.git = git;
+            }
         }
     }
 }
