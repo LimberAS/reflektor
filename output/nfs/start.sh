@@ -12,6 +12,13 @@ function check_status {
 
 function start()
 {
+    if [[ -f /bin/setup.sh ]];
+    then
+        echo "Running setup"
+        source /bin/setup.sh
+        echo "Setup finished"
+    fi
+
     echo "Starting NFSv4"
     rpc.nfsd -V 4 -N 3 -N 2
     check_status
