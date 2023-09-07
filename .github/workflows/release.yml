@@ -49,7 +49,7 @@ jobs:
                   echo "version=$PUBLISH_VERSION" >> "$GITHUB_OUTPUT"
 
             - name: Build and push reflektor input
-              uses: docker/build-push-action@v2
+              uses: docker/build-push-action@v4
               with:
                   context: input/dist
                   file: docker/Dockerfile
@@ -59,7 +59,7 @@ jobs:
                   tags: ghcr.io/limberas/reflektor-input:${{ steps.get-publish-version.outputs.version }}
 
             - name: Build and push reflektor output/nfs
-              uses: docker/build-push-action@v2
+              uses: docker/build-push-action@v4
               with:
                   context: output/nfs
                   push: true

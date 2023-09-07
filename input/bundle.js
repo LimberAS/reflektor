@@ -11,7 +11,7 @@ await build({
     minify: false,
     sourcemap: true,
     target: ['node20'],
-    outfile: `./dist/bin.js`,
+    outfile: `./dist/bin.mjs`,
     platform: 'node',
     format: 'esm',
     treeShaking: true,
