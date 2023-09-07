@@ -12,7 +12,7 @@ function check_status {
 
 function start()
 {
-    if [[ -f /bin/setup.sh ]];
+    if [ -f /bin/setup.sh ];
     then
         echo "Running setup"
         source /bin/setup.sh
