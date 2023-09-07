@@ -53,8 +53,6 @@ jobs:
               with:
                   context: input/dist
                   file: docker/Dockerfile
-                  build-args: |
-                      entry=reflektor-input
                   push: true
                   tags: ghcr.io/limberas/reflektor-input:${{ steps.get-publish-version.outputs.version }}
 
