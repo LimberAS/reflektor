@@ -52,7 +52,7 @@ jobs:
               uses: docker/build-push-action@v4
               with:
                   context: input/dist
-                  file: docker/Dockerfile
+                  file: input/Dockerfile
                   push: true
                   tags: ghcr.io/limberas/reflektor-input:${{ steps.get-publish-version.outputs.version }}
 

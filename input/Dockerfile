@@ -1,5 +1,8 @@
 FROM node:lts-alpine
 
+RUN apk update && apk upgrade && \
+    apk add --no-cache git
+
 USER node
 
 RUN mkdir -p /home/node/bin
