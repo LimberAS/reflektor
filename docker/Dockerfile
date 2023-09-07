@@ -11,4 +11,4 @@ COPY --chown=node:node . /home/node/dist
 
 RUN ln -s /home/node/dist/bin.mjs /home/node/bin/entrypoint && chmod u+x /home/node/dist/bin.mjs
 
-ENTRYPOINT entrypoint
+ENTRYPOINT ["entrypoint"]
