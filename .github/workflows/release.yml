@@ -1,4 +1,4 @@
-name: Release components
+name: Build and release components
 
 on:
     workflow_dispatch:
