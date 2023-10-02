@@ -95,8 +95,15 @@ export class Pairs {
     async start(): Promise<void> {
         const webTriggers: WebTriggerConfig[] = [];
         const configuredOutputPaths = new Set<string>();
+        const usedIds = new Set<string>();
 
         for (const pair of this.config) {
+            if (usedIds.has(pair.id)) {
+                throw new Error(`id used multiple times: ${pair.id}`);
+            } else {
+                usedIds.add(pair.id);
+            }
+
             if (configuredOutputPaths.has(pair.destination.path)) {
                 throw new Error(`output path already configured: ${pair.destination.path}`);
             } else {
@@ -111,7 +118,7 @@ export class Pairs {
                         webTriggers.push({
                             relatedOutputPath: pair.destination.path,
                             cb,
-                            path: `/triggers/${webTriggers.length}`,
+                            path: `/triggers/${pair.id}`,
                             token: getSecret(trigger.authorization.bearer),
                         });
                         break;

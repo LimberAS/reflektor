@@ -26,6 +26,10 @@ const gitSource = z.object({
 });
 
 const srcDestPair = z.object({
+    id: z
+        .string()
+        .regex(/[A-Za-z0-9]+/)
+        .max(100),
     source: gitSource, // .or more types here
     destination: z.object({
         path: z.string(),
