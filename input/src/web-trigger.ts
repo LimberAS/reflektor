@@ -17,8 +17,8 @@ export async function startWebTriggers(triggers: WebTriggerConfig[]): Promise<vo
 
     const fastify = await createFastifyServer();
 
-    for (const [index, trigger] of triggers.entries()) {
-        log.info({ configureWebTrigger: index, outputPath: trigger.relatedOutputPath });
+    for (const trigger of triggers) {
+        log.info({ configureWebTrigger: trigger.path, outputPath: trigger.relatedOutputPath });
         fastify.post(trigger.path, async (request, reply) => {
             if (request.headers.authorization !== `Bearer ${trigger.token}`) {
                 reply.code(403).send({ error: 'forbidden' });
