@@ -1,6 +1,6 @@
 import { existsSync, mkdirSync, rmSync } from 'fs';
 
-import { CheckRepoActions, SimpleGit, simpleGit } from 'simple-git';
+import { CheckRepoActions, CleanOptions, SimpleGit, simpleGit } from 'simple-git';
 
 import { GitSource } from './config.js';
 import { getSecret } from './secrets.js';
@@ -29,6 +29,12 @@ export class Git implements Source {
                     const remoteRepository = remotes[0]?.refs.fetch;
                     if (remoteRepository === repository) {
                         this.git = git;
+                        await this.git.clean(
+                            CleanOptions.FORCE +
+                                CleanOptions.RECURSIVE +
+                                CleanOptions.QUIET +
+                                CleanOptions.IGNORED_INCLUDED
+                        );
                         await this.git.pull();
                     }
                 }
