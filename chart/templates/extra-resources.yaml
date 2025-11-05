@@ -1,0 +1,5 @@
+{{- include "reflektor.defaultValues" . }}
+{{- range .Values.extraResources }}
+---
+{{ . | toYaml }}
+{{- end }}

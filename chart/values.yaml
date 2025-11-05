@@ -1,0 +1,45 @@
+version: 0.9.9
+
+imagePull:
+#  registry: ghcr.io/limberas
+#  secretName: nameOfSecret
+
+# input:
+#   mountedEnvSecrets:
+#     secretName: secretsdsadsd
+#     entries:
+#       - var: env-var-set
+#         key: first-key-in-secret
+#       - var: second-env-var-set
+#         key: second-key-in-secret
+
+# exportOptions:
+#   nfs:
+#     localVolume:
+#       persistentVolumeClaim:
+#         claimName: my-persistant-volume-claim
+
+# reflected:
+#   repo:
+#     source:
+#       type: git-https
+#       repository: github.com/LimberAS/charts.git
+#       branch: feat/dagster
+#       authorization:
+#         {
+#           "username": { "type": "env", "var": "GIT_USERNAME" },
+#           "password": { "type": "env", "var": "GIT_PASSWORD" },
+#         }
+#       refreshTriggers:
+#         [
+#           {
+#             "type": "web",
+#             "authorization":
+#               { "bearer": { "type": "env", "var": "WEBHOOK_TOKEN" } },
+#           },
+#         ]
+#     export:
+#       type: nfs
+#       repositoryPath: /
+
+extraResources: []

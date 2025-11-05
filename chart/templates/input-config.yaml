@@ -1,0 +1,17 @@
+{{- include "reflektor.defaultValues" . }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: input-config
+  labels:
+    app.kubernetes.io/name: reflektor
+    app.kubernetes.io/version: "{{ .Values.version }}"
+    app.kubernetes.io/component: main
+data:
+  config.json: |
+    {{- $list := list -}}
+    {{- range $id, $config := .Values.reflected -}}
+    {{- $entry := dict "id" $id "source" $config.source "destination" (dict "path" (printf "/home/node/workspace/%s" $id)) -}}
+    {{- $list = append $list $entry -}}
+    {{- end }}
+    {{- toPrettyJson $list | nindent 4 }}

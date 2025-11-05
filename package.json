@@ -6,7 +6,8 @@
     "packageManager": "pnpm@10.7.1",
     "scripts": {
         "reset": "git clean -fxd",
-        "lint": "pnpm run --recursive lint"
+        "lint": "pnpm run --recursive lint",
+        "package": "cd repo && helm package ../chart && helm repo --url 'https://limberas.github.io/reflektor' index ."
     },
     "license": "GPL-3.0-or-later",
     "devDependencies": {

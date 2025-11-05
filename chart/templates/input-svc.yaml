@@ -1,0 +1,15 @@
+{{- include "reflektor.usedWebTriggers" . }}
+{{- if .reflektorInputUsesWebTriggers }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: input
+spec:
+  type: ClusterIP
+  ports:
+    - port: 9095
+      protocol: TCP
+  selector:
+    app.kubernetes.io/name: reflektor
+    app.kubernetes.io/component: main
+{{- end -}}

@@ -1,0 +1,33 @@
+{{- include "reflektor.defaultValues" . }}
+{{- include "reflektor.usedExports" . }}
+{{- if .reflektorExportUsesNfs }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nfs-config
+  labels:
+    app.kubernetes.io/name: reflektor
+    app.kubernetes.io/version: "{{ .Values.version }}"
+    app.kubernetes.io/component: main
+data:
+  exports: |
+    /srv/exports *(ro,fsid=0,insecure,all_squash,anonuid=1000,anongid=1000,async,no_subtree_check)
+    {{ range $id, $config := .Values.reflected }}
+    {{- if (eq $config.export.type "nfs")  }}
+    /srv/exports/{{ $id }} *(ro,insecure,all_squash,anonuid=1000,anongid=1000,async,no_subtree_check)
+    {{- end }}
+    {{- end }}
+  {{- end }}
+  setup.sh: |
+    mkdir /srv/exports
+    {{ range $id, $config := .Values.reflected }}
+    {{- if (eq $config.export.type "nfs")  }}
+    {{- $src := printf "/srv/workspace/%s" (ternary $id (printf "%s%s" $id $config.export.repositoryPath) (eq $config.export.repositoryPath "/")) -}}
+    mkdir /srv/exports/{{- $id }}
+    until [ -d {{ $src }} ]
+    do
+        sleep 1
+    done
+    mount --bind {{ $src }} /srv/exports/{{ $id }}
+    {{ end }}
+    {{- end }}

@@ -1,0 +1,102 @@
+{{- include "reflektor.defaultValues" . }}
+{{- include "reflektor.usedExports" . }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: input
+spec:
+  replicas: 1
+  revisionHistoryLimit: 0
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: main
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: reflektor
+        app.kubernetes.io/version: "{{ .Values.version }}"
+        app.kubernetes.io/component: main
+      annotations:
+        cluster-autoscaler.kubernetes.io/safe-to-evict: "true"
+        {{- if .reflektorExportUsesNfs }}
+        checksum/nfs-config: {{ include (print $.Template.BasePath "/nfs-config.yaml") . | sha256sum }}
+        {{- end}}
+        checksum/input-config: {{ include (print $.Template.BasePath "/input-config.yaml") . | sha256sum }}
+    spec:
+      {{ with .Values.imagePull.secretName}}
+      imagePullSecrets:
+        - name: "{{ . }}"
+      {{ end }}
+      securityContext:
+        fsGroup: 1000 # group of reflektor node user
+      containers:
+        - name: input
+          image: "{{ .Values.imagePull.registry }}/reflektor-input:{{ .Values.version }}"
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: REFLEKTOR_LOGGER_MODE
+              value: "{{ .Values.loggerMode }}"
+            - name: NODE_OPTIONS
+              value: --max-old-space-size=128
+          {{ range .Values.input.mountedEnvSecrets.entries }}
+            - name: "{{ .var }}"
+              valueFrom:
+                secretKeyRef:
+                  name: "{{ $.Values.input.mountedEnvSecrets.secretName }}"
+                  key: "{{ .key }}"
+          {{ end }}
+          args:
+            - start
+            - --config-file=/home/node/config.json
+          ports:
+            - containerPort: 2049
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 10m
+              memory: 128M
+            limits:
+              memory: 128M
+          volumeMounts:
+            - mountPath: /home/node/workspace
+              name: local
+              subPath: workspace
+              readOnly: false
+            - mountPath: /home/node/config.json
+              name: input-config
+              subPath: config.json
+              readOnly: true
+        {{- if .reflektorExportUsesNfs }}
+        - name: output-nfs
+          image: "{{ .Values.imagePull.registry }}/reflektor-output-nfs:{{ .Values.version }}"
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - mountPath: /srv
+              name: local
+            - mountPath: /etc/exports
+              subPath: exports
+              name: nfs-config
+            - mountPath: /bin/setup.sh
+              subPath: setup.sh
+              name: nfs-config
+          securityContext:
+            privileged: true
+          resources:
+            requests:
+              cpu: 10m
+              memory: 128M
+            limits:
+              memory: 128M
+        {{- end}}
+      volumes:
+        - name: local
+          {{- .Values.exportOptions.nfs.localVolume | toYaml | nindent 10 }}
+        - name: input-config
+          configMap:
+            name: input-config
+        {{- if .reflektorExportUsesNfs }}
+        - name: nfs-config
+          configMap:
+            name: nfs-config
+        {{- end}}
+

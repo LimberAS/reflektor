@@ -62,4 +62,16 @@ jobs:
                   context: output/nfs
                   push: true
                   tags: ghcr.io/limberas/reflektor-output-nfs:${{ steps.get-publish-version.outputs.version }}
-# add output web component here
+
+            # add output web component here
+
+            - name: Upload GitHub Pages artifact
+              uses: actions/upload-pages-artifact@v3
+              with:
+                path: ./repo
+
+            - name: Publish Helm chart
+              uses: actions/deploy-pages@v4
+
+
+
