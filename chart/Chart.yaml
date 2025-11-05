@@ -3,4 +3,5 @@ name: reflektor
 description: Helm chart for reflektor app
 home: https://github.com/LimberAS/reflektor
 type: application
-version: 1.0.0
+version: 0.9.8
+appVersion: 0.9.8

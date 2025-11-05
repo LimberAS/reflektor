@@ -1,4 +1,4 @@
-version: 0.9.9
+version: 0.9.8
 
 imagePull:
 #  registry: ghcr.io/limberas
