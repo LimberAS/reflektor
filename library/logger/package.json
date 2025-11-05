@@ -10,11 +10,11 @@
     },
     "main": "index.js",
     "dependencies": {
-        "pino": "^8.14.1",
-        "@limberas/reflektor-logger": "workspace:*"
+        "@limberas/reflektor-logger": "workspace:*",
+        "pino": "^10.1.0"
     },
     "devDependencies": {
-        "typescript": "^5.2.2",
-        "@types/node": "^20.5.9"
+        "@types/node": "^24.10.0",
+        "typescript": "^5.2.2"
     }
 }

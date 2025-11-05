@@ -9,12 +9,12 @@
         "lint": "tsc --project tsconfig.json"
     },
     "devDependencies": {
-        "@types/node": "^20.5.9",
+        "@types/node": "^24.10.0",
         "typescript": "^5.2.2"
     },
     "dependencies": {
         "@limberas/reflektor-logger": "workspace:*",
-        "fastify": "^4.22.2",
-        "fastify-plugin": "^4.5.1"
+        "fastify": "^5.6.1",
+        "fastify-plugin": "^5.1.0"
     }
 }
