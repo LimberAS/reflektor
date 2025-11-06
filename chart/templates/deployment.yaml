@@ -3,10 +3,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: input
+  name: reflektor
 spec:
   replicas: 1
   revisionHistoryLimit: 0
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app.kubernetes.io/component: main
