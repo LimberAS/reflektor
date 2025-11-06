@@ -21,7 +21,7 @@ export async function createFastifyServer(): Promise<CreatedFastifyInstance> {
         RawRequestDefaultExpression<HttpServer>,
         RawReplyDefaultExpression<HttpServer>
     >({
-        logger: log,
+        loggerInstance: log,
     });
 
     server.setNotFoundHandler((request, reply) => {
