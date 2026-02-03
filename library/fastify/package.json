@@ -14,7 +14,7 @@
     },
     "dependencies": {
         "@limberas/reflektor-logger": "workspace:*",
-        "fastify": "^5.6.1",
+        "fastify": "^5.7.3",
         "fastify-plugin": "^5.1.0"
     }
 }
