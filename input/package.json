@@ -20,7 +20,7 @@
         "@limberas/reflektor-fastify": "workspace:*",
         "@limberas/reflektor-logger": "workspace:*",
         "commander": "^14.0.2",
-        "simple-git": "^3.19.1",
+        "simple-git": "^3.32.3",
         "zod": "^4.1.12"
     }
 }
