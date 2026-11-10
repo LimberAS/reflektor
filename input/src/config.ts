@@ -12,14 +12,25 @@ const refreshTrigger = z.object({
     }),
 });
 
+const valueOrSecretRef = z.union([z.string(), z.number().int().transform(String), secretRef]);
+
+const basicAuthorization = z.object({
+    type: z.optional(z.literal('basic')),
+    username: secretRef,
+    password: secretRef,
+});
+
+const githubAppAuthorization = z.object({
+    type: z.literal('github-app'),
+    appId: valueOrSecretRef,
+    installationId: valueOrSecretRef,
+    privateKey: secretRef,
+    apiUrl: z.optional(z.string().url()),
+});
+
 const gitSource = z.object({
     type: z.enum(['git-https']),
-    authorization: z.optional(
-        z.object({
-            username: secretRef,
-            password: secretRef,
-        })
-    ),
+    authorization: z.optional(z.union([githubAppAuthorization, basicAuthorization])),
     repository: z.string(),
     branch: z.string(),
     refreshTriggers: z.array(refreshTrigger),
@@ -45,3 +56,7 @@ export type Config = z.infer<typeof configParser>;
 export type SecretRef = z.infer<typeof secretRef>;
 
 export type GitSource = z.infer<typeof gitSource>;
+
+export type ValueOrSecretRef = z.infer<typeof valueOrSecretRef>;
+
+export type GithubAppAuthorization = z.infer<typeof githubAppAuthorization>;

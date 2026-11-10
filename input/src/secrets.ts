@@ -16,3 +16,7 @@ export function getSecret(ref: SecretRef): string {
         }
     }
 }
+
+export function getValueOrSecret(value: string | SecretRef): string {
+    return typeof value === 'string' ? value : getSecret(value);
+}
