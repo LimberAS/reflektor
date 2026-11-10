@@ -44,7 +44,7 @@ spec:
             - name: "{{ .var }}"
               valueFrom:
                 secretKeyRef:
-                  name: "{{ $.Values.input.mountedEnvSecrets.secretName }}"
+                  name: "{{ .secretName | default $.Values.input.mountedEnvSecrets.secretName }}"
                   key: "{{ .key }}"
           {{ end }}
           args:

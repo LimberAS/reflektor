@@ -12,6 +12,9 @@ imagePull:
 #         key: first-key-in-secret
 #       - var: second-env-var-set
 #         key: second-key-in-secret
+#       - var: env-var-from-other-secret
+#         key: key-in-other-secret
+#         secretName: other-secret # optional, overrides mountedEnvSecrets.secretName
 
 # exportOptions:
 #   nfs:

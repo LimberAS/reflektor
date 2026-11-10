@@ -3,9 +3,9 @@ entries:
   reflektor:
   - apiVersion: v2
     appVersion: 0.10.0
-    created: "2026-11-10T10:56:45.981895888+02:00"
+    created: "2026-11-10T12:18:58.502864593+02:00"
     description: Helm chart for reflektor app
-    digest: e2d885f813c393ddb05f9c89a10c4f57f75882d18365e885f7af345cbf14d9ef
+    digest: 291669ca087123e5c8ea69ddb51a5a29447efabba563677e3151f078da82c7e1
     home: https://github.com/LimberAS/reflektor
     name: reflektor
     type: application
@@ -23,4 +23,4 @@ entries:
     urls:
     - https://limberas.github.io/reflektor/reflektor-0.9.8.tgz
     version: 0.9.8
-generated: "2026-11-10T10:56:45.981643823+02:00"
+generated: "2026-11-10T12:18:58.502616145+02:00"
