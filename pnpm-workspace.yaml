@@ -1,1 +1,6 @@
-{ packages: [input, output/web, library/*] }
+packages:
+  - input
+  - output/web
+  - library/*
+allowBuilds:
+  esbuild: true
