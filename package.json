@@ -1,7 +1,7 @@
 {
     "name": "@limberas/reflektor",
     "private": true,
-    "version": "0.9.8",
+    "version": "0.10.0",
     "description": "Monorepo for reflektor",
     "packageManager": "pnpm@12.2.1",
     "scripts": {
